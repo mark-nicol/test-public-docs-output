@@ -11,8 +11,7 @@
 <link href="_static/theme.9297a650d9dd3016d913.css" rel="stylesheet"/>
 <link href="search.html" rel="search" title="Search"/>
 <link href="genindex.html" rel="index" title="Index"/>
-<link href="classic.html" rel="next" title="The Classic ALMA Observing Tool"/>
-<link href="index.html" rel="prev" title="Welcome to perhaps some documentation!"/>
+<link href="classic.html" rel="prev" title="The Classic ALMA Observing Tool"/>
 </head>
 <body class="antialiased text-gray scroll-smooth">
 <div class="min-h-screen xl:h-screen flex flex-col xl:grid xl:grid-layout print:block print:h-auto" data-action="keydown@window-&gt;search#focus " data-controller="sidebar search " id="page">
@@ -35,8 +34,8 @@
 <nav class="h-full overflow-y-auto bg-white text-gray-600 pt-8 flex flex-col" role="navigation">
 <div class="nav-toc flex-1 pl-6"><p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><div class="nav-link"><a class="reference internal" data-action="click-&gt;sidebar#close" href="classic.html">The Classic ALMA Observing Tool</a></div></li>
 <li class="toctree-l1 current expanded"><div class="nav-link"><a class="current reference internal" data-action="click-&gt;sidebar#close" href="#">Overview of the Next Generation Observing Tool (ngOT)</a></div></li>
-<li class="toctree-l1"><div class="nav-link"><a class="reference internal" data-action="click-&gt;sidebar#close" href="classic.html">classic OT</a></div></li>
 </ul>
 </div>
 <button class="text-4xl text-gray-800 p-4 bottom-0 hover:text-brand xl:hidden focus:text-brand self-center" data-action="sidebar#close" title="Close navigation menu">
@@ -52,7 +51,70 @@
 <article class="flex-1" role="main">
 <section id="overview-of-the-next-generation-observing-tool-ngot">
 <h1>Overview of the Next Generation Observing Tool (ngOT)<a aria-label="Click to copy this link" class="headerlink tooltipped tooltipped-ne" data-action="click-&gt;clipboard#copyHeaderLink" data-controller="clipboard" href="#overview-of-the-next-generation-observing-tool-ngot">¶</a></h1>
-<p>Placeholder for a description of the new OT</p>
+<p>The Next Generation OT consists of the following parts</p>
+<p class="plantuml">
+<img alt='@startuml ngOT Container View
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/angular.puml
+!include DEVICONS/java.puml
+!include DEVICONS/redis.puml
+!include FONTAWESOME/users.puml
+
+LAYOUT_WITH_LEGEND()
+LAYOUT_LEFT_RIGHT()
+
+Container_Ext(archive_services, "Archive Services", "Java")
+Container_Ext(cat, "Source Catalogs", "XML or JSON services")
+ContainerDb_Ext(archive, "ALMA Data Archive", "Oracle DB", "Shared Data Archive of APDM Entities")
+
+Person(astronomer, "Users", "Astronomers wishing  to create a proposal for the ALMA OT", "users")
+System_Boundary(ngOT, "ng Observing Tool") {
+    Container(ngot_spa, "ngOT Client Application", "Javascript, Angular, D3", "Main interface that the user interacts with", "angular")
+    Container(ngot_api, "ngOT Services", "Java / Spring Boot, Docker Containers", "API Gateway and Router together with the supporting services", "java")
+    ContainerDb(redis, "User  Store",  "Redis","Storage for projects currently being created or edited by users within the ngOT")
+    Rel(astronomer, ngot_spa, "Uses", "HTTPS")
+    Rel(ngot_api, cat, "Uses", "HTTPS")
+    Rel(ngot_spa, cat, "Uses", " HTTPS")
+    Rel(ngot_spa, ngot_api, "Uses", "JSON messages, REST API, over HTTPS")
+    Rel(ngot_api, redis, "Reads from and writes to", "JSON messages, REST API, over HTTPS")
+}
+
+Rel(ngot_api, archive_services, "Reads from and writes to", "XML messages SOAP services over HTTPs")
+Rel(archive_services, archive, "Read and Write Submitted Projects and Proposals", "SQL ODBC")
+
+@enduml' src="_images/plantuml-efecf0d48ebea9f1db5f83458e48d61fe578e8d0.png"/>
+</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 14%"/>
+<col style="width: 86%"/>
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>astronomer</p></td>
+<td><p>“Astronomers wishing  to create a proposal for the ALMA OT”</p></td>
+</tr>
+<tr class="row-odd"><td><p>ng Observing Tool</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>ngOT Client Application”</p></td>
+<td><p>GUI created using Angular (a Typescript based framework)  with Data Driven Documents (D3)  for more visual components.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ngOT Services”</p></td>
+<td><p>Java / Spring Boot based services running in docker containers orchestrated using Netflix developed services ( Eureka for service discovery and Zuul as a gateway)</p></td>
+</tr>
+<tr class="row-even"><td><p>“User  Store”</p></td>
+<td><p>Storage for projects currently being created or edited by users within the ngOT within a Redis database</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </article>
 <footer>
