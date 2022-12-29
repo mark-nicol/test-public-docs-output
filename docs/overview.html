@@ -89,8 +89,8 @@ Rel(archive_services, archive, "Read and Write Submitted Projects and Proposals"
 </p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 14%"/>
-<col style="width: 86%"/>
+<col style="width: 22%"/>
+<col style="width: 78%"/>
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Component</p></th>
@@ -98,20 +98,26 @@ Rel(archive_services, archive, "Read and Write Submitted Projects and Proposals"
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>astronomer</p></td>
-<td><p>“Astronomers wishing  to create a proposal for the ALMA OT”</p></td>
-</tr>
-<tr class="row-odd"><td><p>ng Observing Tool</p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p>ngOT Client Application”</p></td>
-<td><p>GUI created using Angular (a Typescript based framework)  with Data Driven Documents (D3)  for more visual components.</p></td>
-</tr>
-<tr class="row-odd"><td><p>ngOT Services”</p></td>
-<td><p>Java / Spring Boot based services running in docker containers orchestrated using Netflix developed services ( Eureka for service discovery and Zuul as a gateway)</p></td>
-</tr>
-<tr class="row-even"><td><p>“User  Store”</p></td>
-<td><p>Storage for projects currently being created or edited by users within the ngOT within a Redis database</p></td>
+<tr class="row-even"><td><p>Users</p>
+<p>ng Observing Tool
+ngOT Client Application”</p>
+<p>ngOT Services”</p>
+<p>“User  Store”</p>
+</td>
+<td><p>There are two main groups of users of the ngOT:</p>
+<ul class="simple">
+<li><p>Astronomers wishing to create a proposal for
+the ALMA OT”</p></li>
+<li><p>Staff at the ALMA Observatory managing accepted
+observing proposals through their proposal lifecycle</p></li>
+</ul>
+<p>GUI created using Angular (a Typescript based framework)  with Data Driven Documents (D3)
+for more visual components.
+Java / Spring Boot based services running in docker containers orchestrated using Netflix
+developed services ( Eureka for service discovery and Zuul as a gateway)
+Storage for projects currently being created or edited by users within the ngOT
+within a Redis database</p>
+</td>
 </tr>
 </tbody>
 </table>
